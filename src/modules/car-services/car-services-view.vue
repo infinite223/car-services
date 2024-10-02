@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1>Car services</h1>
+    <h1 class="text-amber-600 text-3xl font-extrabold">Car services</h1>
     <RouterLink to="/">back</RouterLink>
   </div>
 </template>
