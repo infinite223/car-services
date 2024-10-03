@@ -10,7 +10,8 @@ export type CarDto = {
 export type ClientDto = {
   id: string;
   firstName: string;
-  secondName: string;
+  secondName?: string;
+  phoneNumber: number;
   nip?: string;
 
   cars: CarDto[];

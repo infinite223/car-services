@@ -14,7 +14,7 @@ const handleClick = async () => {
 
 <template>
   <div class="">
-    <button @click="handleClick">Pobierz dane</button>
+    <v-btn @click="handleClick" color="green">Pobierz dane</v-btn>
     <RouterLink to="/">go to login</RouterLink>
     <RouterLink to="/register">go to register</RouterLink>
   </div>
