@@ -20,6 +20,8 @@ export type ClientDto = {
 export type ServiceDto = {
   id: string;
   name: string;
+  description: string;
+  done: boolean;
   price: number;
 };
 
@@ -34,4 +36,12 @@ export type CarElementDto = {
   description: string;
   inUse: boolean;
   price: number;
+};
+
+export type OrderElementDto = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  received: boolean;
 };

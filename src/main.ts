@@ -1,8 +1,9 @@
+import "@mdi/font/css/materialdesignicons.css";
+import "@fortawesome/fontawesome-free/css/all.css";
 import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
 import { router } from "./router.config";
-// Vuetify
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";

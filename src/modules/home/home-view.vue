@@ -2,7 +2,7 @@
 import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "./../../services/firebase.config";
 import { RouterLink } from "vue-router";
-
+import AppLogo from "../../components/app-logo.vue";
 const handleClick = async () => {
   const data = await getDocs(collection(db, "cars"));
 
@@ -13,14 +13,13 @@ const handleClick = async () => {
 </script>
 
 <template>
-  <div class="">
-    <v-btn @click="handleClick" color="green">Pobierz dane</v-btn>
-    <RouterLink to="/">go to login</RouterLink>
-    <RouterLink to="/register">go to register</RouterLink>
+  <div class="flex flex-col items-center justify-center h-svh gap-2">
+    <RouterLink to="/car-services"> <app-logo /></RouterLink>
+    <!-- <RouterLink to="/">go to login</RouterLink> -->
+    <main>
+      <RouterView />
+    </main>
   </div>
-  <main>
-    <RouterView />
-  </main>
 </template>
 
 <style scoped></style>
