@@ -1,4 +1,8 @@
-import { OrderElementDto, ServiceDto } from "../modules/car-services/models";
+import {
+  OrderElementDto,
+  Service,
+  ServiceDto,
+} from "../modules/car-services/models";
 
 export const orders: OrderElementDto[] = [
   {
@@ -115,7 +119,7 @@ export const orders: OrderElementDto[] = [
   },
 ];
 
-export const services: ServiceDto[] = [
+export const services: Service[] = [
   {
     id: "1",
     name: "Wymiana oleju",

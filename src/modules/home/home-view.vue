@@ -15,7 +15,7 @@ const handleClick = async () => {
 <template>
   <div class="flex flex-col items-center justify-center h-svh gap-2">
     <RouterLink to="/car-services"> <app-logo /></RouterLink>
-    <!-- <RouterLink to="/">go to login</RouterLink> -->
+
     <main>
       <RouterView />
     </main>
