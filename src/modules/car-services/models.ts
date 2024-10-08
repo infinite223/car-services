@@ -42,6 +42,9 @@ export type OrderElementDto = {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price?: number;
   received: boolean;
+  engineNumber?: string,
+  make?: string,
+  model?: string,
 };

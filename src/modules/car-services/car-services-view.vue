@@ -1,14 +1,24 @@
 <script setup lang="ts">
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import AppLogo from "../../components/app-logo.vue";
-const navigationItems = [
-  { path: "/car-services", name: "Usługi", icon: "mdi-car-cog" },
-  {
-    path: "/orders",
-    name: "Zamówienia",
-    icon: "mdi-order-bool-descending-variant",
-  },
-  { path: "/", name: "Wyloguj", icon: "mdi-logout" },
-];
+import { auth } from "../../services/firebase.config";
+import { useRouter } from "vue-router";
+import { navigationItems } from "./navigation.config";
+import { useFirebaseAuth } from "vuefire";
+
+// const auth = useFirebaseAuth()!
+
+const router = useRouter();
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    router.push("/");
+  }
+});
+
+const logOut = async () => {
+  await signOut(auth);
+  router.push("/");
+};
 </script>
 
 <template>
@@ -26,6 +36,14 @@ const navigationItems = [
             {{ item.name }}
           </span>
         </RouterLink>
+
+        <div
+          class="p-2 hover:text-zinc-500 flex items-center cursor-pointer bg-zinc-50 shadow-sm rounded-md font-semibold"
+          @click="logOut"
+        >
+          <v-icon icon="mdi-logout" class="mr-4" size="20" />
+          <span> Wyloguj </span>
+        </div>
       </div>
     </div>
     <div class="flex w-full p-2 px-4 bg-zinc-100">

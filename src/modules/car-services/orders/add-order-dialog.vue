@@ -37,7 +37,7 @@ function close() {
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn v-bind="activatorProps" color="rgb(249 115 22)" height="30">
         <v-icon icon="mdi-plus" color="white" class="mr-2" />
-        <span class="text-white text-xs">Dodaj</span>
+        <span class="text-white text-xs">Zamów</span>
       </v-btn>
     </template>
 

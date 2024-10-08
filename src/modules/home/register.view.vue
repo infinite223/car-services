@@ -4,14 +4,12 @@ import { useRouter } from "vue-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
 
-// Stan dla email, hasła i powtórzenia hasła
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const errorMessage = ref("");
 const router = useRouter();
 
-// Funkcja do rejestracji
 const register = async () => {
   if (password.value !== confirmPassword.value) {
     errorMessage.value = "Hasła nie są takie same";
@@ -20,7 +18,7 @@ const register = async () => {
 
   try {
     await createUserWithEmailAndPassword(auth, email.value, password.value);
-    router.push("/car-services"); // Przekierowanie po rejestracji
+    router.push("/car-services");
   } catch (error) {
     errorMessage.value =
       "Błąd podczas rejestracji: " + (error as Error).message;

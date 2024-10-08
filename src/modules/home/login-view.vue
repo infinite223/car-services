@@ -10,11 +10,10 @@ const password = ref("");
 const errorMessage = ref("");
 const router = useRouter();
 
-// Funkcja do logowania
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
-    router.push("/car-services"); // Przekierowanie po zalogowaniu
+    router.push("/car-services");
   } catch (error) {
     errorMessage.value = "Błąd podczas logowania: " + (error as Error).message;
   }
