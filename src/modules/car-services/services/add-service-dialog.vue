@@ -40,7 +40,6 @@ const submit = async () => {
   }
   const newService: ServiceDto = {
     ...state,
-    done: false,
   };
   await addDoc(collection(db, "services"), newService);
 

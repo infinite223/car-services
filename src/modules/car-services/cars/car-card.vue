@@ -1,0 +1,65 @@
+<script setup lang="ts">
+import { PropType, ref } from "vue";
+import { Car } from "../models";
+
+const showExpandedDetails = ref(false);
+const props = defineProps({
+  car: {
+    type: Object as PropType<Car>,
+    required: true,
+  },
+});
+</script>
+
+<template>
+  <v-card
+    max-width="300"
+    min-width="250"
+    :title="props.car.model.toUpperCase()"
+    :subtitle="props.car.make"
+    :text="props.car.vin"
+  >
+    <v-card-actions>
+      <v-spacer></v-spacer>
+
+      <v-btn
+        :icon="showExpandedDetails ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="showExpandedDetails = !showExpandedDetails"
+      ></v-btn>
+    </v-card-actions>
+    <v-expand-transition>
+      <div v-show="showExpandedDetails">
+        <v-divider></v-divider>
+
+        <v-card-text>
+          <div class="font-weight-bold ms-1 mb-2">Usługi:</div>
+
+          <v-timeline align="start" density="compact">
+            <v-timeline-item
+              v-for="service in props.car.services"
+              :key="service.id"
+              :dot-color="service.done ? 'green' : 'gray'"
+              size="x-small"
+            >
+              <div class="mb-4">
+                <div class="font-weight-normal">
+                  <strong>{{ service.name }}</strong>
+                </div>
+
+                <div class="line-clamp-2">{{ service.description }}</div>
+                <div class="line-clamp-2">{{ service.executeTime }}</div>
+              </div>
+            </v-timeline-item>
+          </v-timeline>
+
+          <div class="flex flex-col gap-2 mt-2">
+            <div class="ml-1" v-if="!props.car.services">
+              Aktualnie nie ma usług
+            </div>
+            <v-btn class="w-full">Dodaj usługe</v-btn>
+          </div>
+        </v-card-text>
+      </div>
+    </v-expand-transition>
+  </v-card>
+</template>

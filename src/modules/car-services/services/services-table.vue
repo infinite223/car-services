@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { db } from '../../../services/firebase.config';
-// import { services } from '../../../utils/mocked.data';
+import { collection, doc, onSnapshot } from "firebase/firestore";
 import { Service } from '../models';
 import addServiceDialog from './add-service-dialog.vue';
 
 const headers = [
   { title: "Nazwa", key: "name" },
-  { title: "Cena", key: "price" },
   { title: "Opis", key: "description" },
-  { title: "Wykonana", key: "done" },
+  { title: "Cena", key: "price" },
 ];
-import { collection, doc, onSnapshot } from "firebase/firestore";
+
 const services = ref<Service[]>([])
 
-const unsub = onSnapshot(collection(db, "services"), (doc) => {
+onSnapshot(collection(db, "services"), (doc) => {
     services.value = doc.docs.map((doc) => { return {...doc.data(), id: doc.id} as Service } );
 });
 

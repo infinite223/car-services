@@ -1,10 +1,21 @@
-export type CarDto = {
+import { Timestamp } from "firebase/firestore";
+
+export type Car = {
   id: string;
+  make: string;
+  model: string;
+  vin: string;
+
+  clientId?: string;
+  services: CarServiceDto[];
+};
+
+export type CarDto = {
   make: string;
   model: string;
 
   clientId?: string;
-  services: ServiceDto[];
+  services: Service[];
 };
 
 export type ClientDto = {
@@ -17,13 +28,23 @@ export type ClientDto = {
   cars: CarDto[];
 };
 
-export type ServiceDto = {
+export type Service = {
   id: string;
   name: string;
   description: string;
-  done: boolean;
   price: number;
 };
+
+export type ServiceDto = {
+  name: string;
+  description: string;
+  price: number;
+};
+
+export interface CarServiceDto extends Service {
+  done: boolean;
+  executeTime?: Timestamp;
+}
 
 export type MagazineDto = {
   id: string;
@@ -44,7 +65,7 @@ export type OrderElementDto = {
   description: string;
   price?: number;
   received: boolean;
-  engineNumber?: string,
-  make?: string,
-  model?: string,
+  engineNumber?: string;
+  make?: string;
+  model?: string;
 };
