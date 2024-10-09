@@ -3,7 +3,8 @@ import { ref, watch } from "vue";
 import { db } from "../../../services/firebase.config";
 import { collectionGroup, onSnapshot } from "firebase/firestore";
 import { Car } from "../models";
-import CarCard from "./car-card.vue";
+import carCard from "./car/car-card/car-card.vue";
+import AddCarDialog from "./add-car-dialog.vue";
 
 const cars = ref<Car[]>([]);
 
@@ -27,7 +28,7 @@ watch(
     <div class="flex justify-between w-full px-4 pt-2">
       <h2 class="font-bold text-lg">Przyjęte pojazdy</h2>
 
-      <add-order-dialog />
+      <add-car-dialog />
     </div>
 
     <v-container>

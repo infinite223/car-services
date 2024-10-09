@@ -21,7 +21,6 @@ const headers = [
     </div>
 
     <v-data-table class="overflow-auto" :items="orders" :headers="headers" </v-data-table>
-
   </div>
 </template>
 

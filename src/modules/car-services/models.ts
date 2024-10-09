@@ -13,6 +13,7 @@ export type Car = {
 export type CarDto = {
   make: string;
   model: string;
+  vin: string;
 
   clientId?: string;
   services: Service[];

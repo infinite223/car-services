@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType, ref } from "vue";
-import { Car } from "../models";
-
+import { Car } from "../../../models";
+import AddCarServiceDialog from "./add-car-service-dialog.vue";
 const showExpandedDetails = ref(false);
 const props = defineProps({
   car: {
@@ -36,8 +36,8 @@ const props = defineProps({
 
           <v-timeline align="start" density="compact">
             <v-timeline-item
-              v-for="service in props.car.services"
-              :key="service.id"
+              v-for="(service, id) in props.car.services"
+              :key="id"
               :dot-color="service.done ? 'green' : 'gray'"
               size="x-small"
             >
@@ -56,7 +56,8 @@ const props = defineProps({
             <div class="ml-1" v-if="!props.car.services">
               Aktualnie nie ma usług
             </div>
-            <v-btn class="w-full">Dodaj usługe</v-btn>
+            <!-- <v-btn class="w-full">Dodaj usługe</v-btn> -->
+            <add-car-service-dialog :car-id="car.id" />
           </div>
         </v-card-text>
       </div>
