@@ -2,7 +2,8 @@
 import { ref } from 'vue';
 import { orders } from '../../../utils/mocked.data';
 import addOrderDialog from './add-order-dialog.vue';
-const showDialog = ref(true)
+const isLoading = ref(false);
+
 const headers = [
   { title: "Id", key: "id" },
   { title: "Nazwa", key: "name" },
@@ -20,7 +21,7 @@ const headers = [
       <add-order-dialog/>
     </div>
 
-    <v-data-table class="overflow-auto" :items="orders" :headers="headers" </v-data-table>
+    <v-data-table :loading="isLoading" class="overflow-auto" :items="orders" :headers="headers" </v-data-table>
   </div>
 </template>
 

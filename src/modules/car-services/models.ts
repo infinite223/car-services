@@ -5,6 +5,7 @@ export type Car = {
   make: string;
   model: string;
   vin: string;
+  admissionDate: Timestamp;
 
   clientId?: string;
   services: CarServiceDto[];
@@ -14,6 +15,7 @@ export type CarDto = {
   make: string;
   model: string;
   vin: string;
+  admissionDate: Timestamp;
 
   clientId?: string;
   services: Service[];
@@ -42,9 +44,10 @@ export type ServiceDto = {
   price: number;
 };
 
-export interface CarServiceDto extends Service {
+export interface CarServiceDto extends ServiceDto {
   done: boolean;
-  executeTime?: Timestamp;
+  startDate?: Timestamp;
+  executeDate?: Timestamp;
 }
 
 export type MagazineDto = {

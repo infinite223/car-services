@@ -2,6 +2,7 @@
 import { PropType, ref } from "vue";
 import { Car } from "../../../models";
 import AddCarServiceDialog from "./add-car-service-dialog.vue";
+import CarMenu from "./car-menu.vue";
 const showExpandedDetails = ref(false);
 const props = defineProps({
   car: {
@@ -15,10 +16,15 @@ const props = defineProps({
   <v-card
     max-width="300"
     min-width="250"
-    :title="props.car.model.toUpperCase()"
     :subtitle="props.car.make"
     :text="props.car.vin"
   >
+    <template #title>
+      <div class="w-full flex items-center justify-between">
+        <span>{{ props.car.model.toUpperCase() }}</span>
+        <car-menu :car="props.car" />
+      </div>
+    </template>
     <v-card-actions>
       <v-spacer></v-spacer>
 
@@ -47,7 +53,7 @@ const props = defineProps({
                 </div>
 
                 <div class="line-clamp-2">{{ service.description }}</div>
-                <div class="line-clamp-2">{{ service.executeTime }}</div>
+                <div class="line-clamp-2">{{ service.executeDate }}</div>
               </div>
             </v-timeline-item>
           </v-timeline>
