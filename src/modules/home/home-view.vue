@@ -13,7 +13,7 @@ const handleClick = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-svh gap-2">
+  <div class="flex flex-col items-center justify-center h-svh gap-4">
     <RouterLink to="/car-services"> <app-logo /></RouterLink>
 
     <main>

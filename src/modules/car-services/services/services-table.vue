@@ -11,7 +11,7 @@ const headers = [
   { title: "Cena", key: "price" },
 ];
 
-const isLoading = ref(true); // Na początku ustawiamy isLoading na true
+const isLoading = ref(true); 
 const services = ref<Service[]>([]);
 
 onSnapshot(collection(db, "services"), (snapshot) => {

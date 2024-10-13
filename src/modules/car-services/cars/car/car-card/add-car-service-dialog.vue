@@ -5,6 +5,7 @@ import { reactive, ref } from "vue";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { CarServiceDto } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
+import AddExistServiceDialog from "./add-exist-service-dialog.vue";
 
 const props = defineProps({
   carId: {
@@ -106,15 +107,10 @@ const submit = async () => {
         </v-card-text>
 
         <v-card-actions class="flex items-center gap-5">
-          <!-- <v-btn @click="close">
-            <span class="text-xs text-orange-600">Wybierz istniejącą</span>
-          </v-btn> -->
           <v-btn @click="close">
             <span class="text-xs">Anuluj</span>
           </v-btn>
-          <v-btn height="30" variant="elevated" class="px-4" @click="submit"
-            ><span class="text-xs">Wybierz istniejącą</span></v-btn
-          >
+          <add-exist-service-dialog :car-id="props.carId" />
           <v-btn
             color="rgb(249 115 22)"
             height="30"
