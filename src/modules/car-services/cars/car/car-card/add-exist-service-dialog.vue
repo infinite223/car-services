@@ -2,8 +2,15 @@
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { onMounted, reactive, ref } from "vue";
-import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
-import { CarServiceDto, Service } from "../../../models";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  Timestamp,
+} from "firebase/firestore";
+import { Service } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
 
 const props = defineProps({
@@ -21,7 +28,7 @@ const headers = [
 
 const isLoading = ref(true);
 const services = ref<Service[]>([]);
-const selectedService = ref<Service[] | null>(null);
+const selectedServiceId = ref<string[]>([]);
 const showDialog = ref(false);
 
 function close() {
@@ -29,7 +36,24 @@ function close() {
 }
 
 const submit = async () => {
-  await addDoc(collection(db, "cars", props.carId, "car-services"), {});
+  const findServiceRef = services.value.find(
+    (s) => s.id === selectedServiceId.value[0]
+  ).ref;
+  if (!findServiceRef) {
+    return;
+  }
+
+  const newcarService = {
+    ref: findServiceRef,
+    done: false,
+    startDate: Timestamp.now(),
+    executeDate: Timestamp.now(),
+  };
+  console.log(newcarService);
+  await addDoc(
+    collection(db, "cars", props.carId, "car-services"),
+    newcarService
+  );
 
   close();
 };
@@ -37,7 +61,7 @@ const submit = async () => {
 onMounted(async () => {
   const res = await getDocs(collection(db, "services"));
   services.value = res.docs.map((doc) => {
-    return { ...doc.data(), id: doc.id } as Service;
+    return { ...doc.data(), id: doc.id, ref: doc.ref } as Service;
   });
   isLoading.value = false;
 });
@@ -64,7 +88,7 @@ onMounted(async () => {
             :headers="headers"
             :show-select="true"
             select-strategy="single"
-            v-model="selectedService"
+            v-model="selectedServiceId"
           ></v-data-table>
         </v-card-text>
 
@@ -74,13 +98,17 @@ onMounted(async () => {
           </v-btn>
 
           <v-btn
-            :disabled="!selectedService || selectedService.length === 0"
-            color="rgb(249 115 22)"
+            :disabled="selectedServiceId.length === 0"
+            :color="selectedServiceId.length !== 0 ? 'rgb(249 115 22)' : 'gray'"
             height="30"
             variant="elevated"
             class="px-4"
             @click="submit"
-            ><span class="text-white text-xs">Dodaj</span></v-btn
+            ><span
+              class="text-xs"
+              :class="selectedServiceId.length !== 0 && 'text-white'"
+              >Dodaj</span
+            ></v-btn
           >
         </v-card-actions>
       </v-card>

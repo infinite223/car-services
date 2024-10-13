@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import { DocumentReference, Timestamp } from "firebase/firestore";
 
 export type Car = {
   id: string;
@@ -36,6 +36,7 @@ export type Service = {
   name: string;
   description: string;
   price: number;
+  ref?: DocumentReference;
 };
 
 export type ServiceDto = {
