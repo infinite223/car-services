@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { required } from "@vuelidate/validators";
-import { useVuelidate } from "@vuelidate/core";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
 import {
   addDoc,
   collection,
@@ -20,6 +18,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["setSelect"]);
+
 const headers = [
   { title: "Nazwa", key: "name" },
   { title: "Opis", key: "description" },
@@ -33,27 +33,18 @@ const showDialog = ref(false);
 
 function close() {
   showDialog.value = false;
+  // emit("closeDialog");
 }
 
 const submit = async () => {
-  const findServiceRef = services.value.find(
+  const selectedService = services.value.find(
     (s) => s.id === selectedServiceId.value[0]
-  ).ref;
-  if (!findServiceRef) {
+  );
+  if (!selectedService?.ref) {
     return;
   }
 
-  const newcarService = {
-    ref: findServiceRef,
-    done: false,
-    startDate: Timestamp.now(),
-    executeDate: Timestamp.now(),
-  };
-  console.log(newcarService);
-  await addDoc(
-    collection(db, "cars", props.carId, "car-services"),
-    newcarService
-  );
+  emit("setSelect", selectedService);
 
   close();
 };
@@ -107,7 +98,7 @@ onMounted(async () => {
             ><span
               class="text-xs"
               :class="selectedServiceId.length !== 0 && 'text-white'"
-              >Dodaj</span
+              >Wybierz</span
             ></v-btn
           >
         </v-card-actions>

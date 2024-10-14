@@ -47,7 +47,7 @@ export type ServiceDto = {
 
 export interface CarServiceDto extends ServiceDto {
   done: boolean;
-  startDate?: Timestamp;
+  startDate?: Date;
   executeDate?: Timestamp;
 }
 

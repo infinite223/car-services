@@ -2,8 +2,8 @@
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { CarServiceDto } from "../../../models";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { CarServiceDto, Service } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
 import AddExistServiceDialog from "./add-exist-service-dialog.vue";
 
@@ -18,6 +18,7 @@ const initialState: CarServiceDto = {
   description: "",
   price: 0,
   done: false,
+  startDate: null,
 };
 
 const state = reactive({
@@ -38,6 +39,12 @@ function close() {
   state;
   showDialog.value = false;
 }
+
+const handleSelect = (service: Service) => {
+  state.description = service.description;
+  state.name = service.name;
+  state.price = service.price;
+};
 
 const submit = async () => {
   const result = await v$.value.$validate();
@@ -95,6 +102,7 @@ const submit = async () => {
             ></v-text-field>
 
             <v-text-field
+              aria-required="true"
               v-model="state.price"
               :error-messages="v$.price.$errors.map((e) => e.$message) as any"
               label="Cena usługi (bez części)"
@@ -103,6 +111,14 @@ const submit = async () => {
               @blur="v$.price.$touch"
               @input="v$.price.$touch"
             ></v-text-field>
+
+            <v-date-input
+              label="Rozpoczęcie usługi"
+              prepend-icon=""
+              variant="underlined"
+              v-model="state.startDate"
+              persistent-placeholder
+            ></v-date-input>
           </form>
         </v-card-text>
 
@@ -110,7 +126,10 @@ const submit = async () => {
           <v-btn @click="close">
             <span class="text-xs">Anuluj</span>
           </v-btn>
-          <add-exist-service-dialog :car-id="props.carId" />
+          <add-exist-service-dialog
+            :car-id="props.carId"
+            @set-select="handleSelect"
+          />
           <v-btn
             color="rgb(249 115 22)"
             height="30"

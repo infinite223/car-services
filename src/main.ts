@@ -11,6 +11,7 @@ import * as directives from "vuetify/directives";
 import { VueFire, VueFireAuth } from "vuefire";
 import { app } from "./services/firebase.config";
 import { VueHtmlToPaper } from "vue-html-to-paper";
+import { VDateInput } from "vuetify/lib/labs/components.mjs";
 
 const options = {
   name: "_blank",
@@ -25,7 +26,10 @@ const options = {
 };
 
 const vuetify = createVuetify({
-  components,
+  components: {
+    ...components,
+    VDateInput,
+  },
   directives,
 });
 

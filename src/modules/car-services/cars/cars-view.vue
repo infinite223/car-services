@@ -25,13 +25,13 @@ watch(
 
 <template>
   <div class="flex flex-col gap-4 w-full">
-    <div class="flex justify-between w-full px-4 pt-2">
-      <h2 class="font-bold text-lg">Przyjęte pojazdy</h2>
-
-      <add-car-dialog />
-    </div>
-
     <v-container>
+      <div class="flex justify-between w-full px-4 pt-2 mb-4">
+        <h2 class="font-bold text-lg">Przyjęte pojazdy</h2>
+
+        <add-car-dialog />
+      </div>
+
       <v-row no-gutters>
         <v-col v-for="car in cars" :key="car.id" cols="12" sm="4">
           <car-card :car="car" />
