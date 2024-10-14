@@ -2,7 +2,7 @@
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../../../services/firebase.config";
 import { CarDto } from "../models";
 
@@ -11,6 +11,7 @@ const initialState: CarDto = {
   model: "",
   vin: "",
   services: [],
+  admissionDate: Timestamp.now(),
 };
 
 const state = reactive({

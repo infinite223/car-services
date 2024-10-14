@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { Car } from "../../../models";
+import ConfirmDialog from "../../../../core/components/confirm-dialog.vue";
+import { ref } from "vue";
+const showDialog = ref(false);
 
 const props = defineProps({
   car: {
@@ -41,10 +44,18 @@ const handlePrint = () => {
   }
 };
 
+const handleRemoveCar = () => {
+  showDialog.value = true;
+};
+
+const removeCar = () => {
+  console.log("remove");
+};
+
 const items = [
   { title: "Drukuj raport", onClick: handlePrint },
   { title: "Edytuj" },
-  { title: "Usuń pojazd" },
+  { title: "Usuń pojazd", onClick: handleRemoveCar },
 ];
 </script>
 
@@ -74,6 +85,18 @@ const items = [
       </v-list-item>
     </v-list>
   </v-menu>
+  <confirm-dialog
+    title="Potwierdź usunięcie"
+    :description="
+      'Czy na pewno chcesz usunąć pojazd:' +
+      ' ' +
+      car.make +
+      ' ' +
+      car.model.toUpperCase()
+    "
+    v-model:showDialog="showDialog"
+    @confirm="removeCar"
+  />
 
   <div id="printable-content" class="hidden w-full h-full">
     <v-card>
