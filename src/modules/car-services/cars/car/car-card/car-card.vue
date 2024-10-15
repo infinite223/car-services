@@ -3,6 +3,7 @@ import { PropType, ref } from "vue";
 import { Car } from "../../../models";
 import AddCarServiceDialog from "./add-car-service-dialog.vue";
 import CarMenu from "./car-menu.vue";
+
 const showExpandedDetails = ref(false);
 const props = defineProps({
   car: {
@@ -53,7 +54,9 @@ const props = defineProps({
                 </div>
 
                 <div class="line-clamp-2">{{ service.description }}</div>
-                <div class="line-clamp-2">{{ service.executeDate }}</div>
+                <div class="line-clamp-2 text-xs">
+                  {{ new Date(service.startDate?.toDate()) }}
+                </div>
               </div>
             </v-timeline-item>
           </v-timeline>

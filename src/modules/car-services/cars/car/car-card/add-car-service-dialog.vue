@@ -54,6 +54,7 @@ const submit = async () => {
   }
   const newCarService: CarServiceDto = {
     ...state,
+    startDate: Timestamp.fromDate(new Date()),
   };
   await addDoc(
     collection(db, "cars", props.carId, "car-services"),

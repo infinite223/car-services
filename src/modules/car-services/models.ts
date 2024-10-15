@@ -11,6 +11,17 @@ export type Car = {
   services: CarServiceDto[];
 };
 
+export type CarGet = {
+  id: string;
+  make: string;
+  model: string;
+  vin: string;
+  admissionDate: Timestamp;
+
+  clientId?: string;
+  services: CarService[];
+};
+
 export type CarDto = {
   make: string;
   model: string;
@@ -45,9 +56,19 @@ export type ServiceDto = {
   price: number;
 };
 
+export interface CarService {
+  name: string;
+  description: string;
+  price: number;
+  id: string;
+  done: boolean;
+  startDate?: Timestamp;
+  executeDate?: Timestamp;
+}
+
 export interface CarServiceDto extends ServiceDto {
   done: boolean;
-  startDate?: Date;
+  startDate?: Timestamp;
   executeDate?: Timestamp;
 }
 
