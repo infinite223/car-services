@@ -3,9 +3,10 @@ import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
 import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
-import { CarServiceDto, Service } from "../../../models";
+import { Service } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
 import AddExistServiceDialog from "./add-exist-service-dialog.vue";
+import { CarServiceCreateDto } from "../../../api.models";
 
 const props = defineProps({
   carId: {
@@ -13,7 +14,7 @@ const props = defineProps({
     type: String,
   },
 });
-const initialState: CarServiceDto = {
+const initialState: CarServiceCreateDto = {
   name: "",
   description: "",
   price: 0,
@@ -52,7 +53,7 @@ const submit = async () => {
   if (!result) {
     return;
   }
-  const newCarService: CarServiceDto = {
+  const newCarService: CarServiceCreateDto = {
     ...state,
     startDate: Timestamp.fromDate(new Date()),
   };

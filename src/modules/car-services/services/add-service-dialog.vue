@@ -4,8 +4,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../../../services/firebase.config";
-import { useRouter } from "vue-router";
-import { ServiceDto } from "../models";
+import { ServiceCreateDto } from "../api.models";
 
 const initialState = {
   name: "",
@@ -38,7 +37,7 @@ const submit = async () => {
   if (!result) {
     return;
   }
-  const newService: ServiceDto = {
+  const newService: ServiceCreateDto = {
     ...state,
   };
   await addDoc(collection(db, "services"), newService);

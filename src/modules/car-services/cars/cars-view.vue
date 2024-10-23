@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { db } from "../../../services/firebase.config";
-import {
-  collection,
-  getDocs,
-  doc,
-  collectionGroup,
-  getDoc,
-} from "firebase/firestore";
-import { Car, CarGet, CarService, CarServiceDto } from "../models";
+import { collection, getDocs } from "firebase/firestore";
+import { Car, CarService } from "../models";
 import carCard from "./car/car-card/car-card.vue";
 import AddCarDialog from "./add-car-dialog.vue";
 
@@ -27,9 +21,9 @@ async function getCarsWithServices() {
   const carsRef = collection(db, "cars");
   const carSnapshot = await getDocs(carsRef);
 
-  const carsData: CarGet[] = await Promise.all(
+  const carsData: Car[] = await Promise.all(
     carSnapshot.docs.map(async (doc) => {
-      const carData = doc.data() as CarGet;
+      const carData = doc.data() as Car;
       const services = await getServicesForCar(doc.id);
       return { ...carData, services, id: doc.id };
     })

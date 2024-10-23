@@ -4,9 +4,9 @@ import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../../../services/firebase.config";
-import { CarDto } from "../models";
+import { CarCreateDto } from "../api.models";
 
-const initialState: CarDto = {
+const initialState: CarCreateDto = {
   make: "",
   model: "",
   vin: "",
@@ -39,7 +39,7 @@ const submit = async () => {
   if (!result) {
     return;
   }
-  const newCar: CarDto = {
+  const newCar: CarCreateDto = {
     ...state,
   };
   await addDoc(collection(db, "cars"), newCar);
