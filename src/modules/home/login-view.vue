@@ -4,7 +4,6 @@ import { useRouter } from "vue-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
 
-// Stan dla email i hasła
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");

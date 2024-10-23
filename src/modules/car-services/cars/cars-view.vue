@@ -60,7 +60,7 @@ watch(
       </div>
 
       <v-row no-gutters>
-        <v-col v-for="car in cars" :key="car.id" cols="12" sm="4">
+        <v-col v-for="car in cars" :key="car.id" cols="12" sm="4" xl="3">
           <car-card :car="car" />
         </v-col>
       </v-row>

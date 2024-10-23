@@ -1,4 +1,3 @@
-const functions = require("firebase-functions");
 // const cors = require("cors")({ origin: true });
 // // Funkcja zwracająca statyczne dane
 // exports.getData = functions.https.onRequest(

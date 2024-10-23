@@ -3,6 +3,8 @@ import { PropType } from "vue";
 import { Car } from "../../../models";
 import ConfirmDialog from "../../../../core/components/confirm-dialog.vue";
 import { ref } from "vue";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../../../../services/firebase.config";
 const showDialog = ref(false);
 
 const props = defineProps({
@@ -24,7 +26,6 @@ const handlePrint = () => {
           <head>
             <title>Drukowanie Raportu</title>
             <style>
-              /* Tutaj można dodać style, które mają zostać zastosowane podczas drukowania */
               body { font-family: Arial, sans-serif; padding: 20px; }
               h1 { color: #333; }
               p { font-size: 14px; }
@@ -48,8 +49,9 @@ const handleRemoveCar = () => {
   showDialog.value = true;
 };
 
-const removeCar = () => {
-  console.log("remove");
+const removeCar = async () => {
+  await deleteDoc(doc(db, "cars", props.car.id));
+  showDialog.value = false;
 };
 
 const items = [
