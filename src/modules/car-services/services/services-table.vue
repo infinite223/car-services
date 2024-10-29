@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { db } from "../../../services/firebase.config";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { Service } from "../models";
 import addServiceDialog from "./add-service-dialog.vue";
 import editServiceDialog from "./edit-service-dialog.vue";
@@ -34,8 +40,10 @@ watch(
   { deep: true }
 );
 
-const editService = (service: Service) => {};
-const removeServices = () => {};
+const removeServices = async () => {
+  await deleteDoc(doc(db, "services", selectedService.value.id));
+};
+
 const selectedService = computed(() => {
   return services.value.find((s) => s.id === selectedServiceId.value[0]);
 });

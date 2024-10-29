@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import { PropType, reactive, ref } from "vue";
+import { onMounted, PropType, reactive, ref } from "vue";
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../services/firebase.config";
 import { ServiceCreateDto } from "../api.models";
@@ -18,8 +18,13 @@ const props = defineProps({
   },
 });
 
+const initialState = {
+  name: "",
+  description: "",
+  price: 0,
+};
 const state = reactive({
-  ...props.selectedService,
+  ...initialState,
 });
 
 const rules = {
@@ -32,8 +37,6 @@ const v$ = useVuelidate(rules, state);
 const showDialog = ref(false);
 function close() {
   v$.value.$reset();
-  Object.assign(state, props.selectedService);
-  state;
   showDialog.value = false;
 }
 
@@ -54,6 +57,17 @@ const submit = async () => {
 
   close();
 };
+import { watch } from "vue";
+
+watch(
+  () => props.selectedService,
+  (newService) => {
+    if (newService) {
+      Object.assign(state, newService);
+    }
+  },
+  { immediate: true, deep: true }
+);
 </script>
 
 <template>
