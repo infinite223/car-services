@@ -33,10 +33,11 @@ function closeDialog() {
           <h2 class="font-semibold text-xl">{{ title }}</h2>
         </template>
 
-        <template #subtitle v-if="description">
-          <h2 class="text-lg mt-2">{{ description }}</h2>
-        </template>
+        <!-- <template #subtitle v-if="description"> </template> -->
 
+        <h2 class="text-md mt-2 px-6 font-thin" v-if="description">
+          {{ description }}
+        </h2>
         <v-card-actions class="flex items-center gap-5">
           <v-btn @click="closeDialog">
             <span class="text-xs">Anuluj</span>

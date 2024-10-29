@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { db } from "../../../services/firebase.config";
 import { collection, onSnapshot } from "firebase/firestore";
 import { Service } from "../models";
 import addServiceDialog from "./add-service-dialog.vue";
+import editServiceDialog from "./edit-service-dialog.vue";
+import confirmDialog from "../../core/components/confirm-dialog.vue";
 
 const headers = [
   { title: "Nazwa", key: "name" },
@@ -11,8 +13,10 @@ const headers = [
   { title: "Cena", key: "price" },
 ];
 
-const isLoading = ref(true); 
+const showConfirmDialog = ref(false);
+const isLoading = ref(true);
 const services = ref<Service[]>([]);
+const selectedServiceId = ref<string[]>([]);
 
 onSnapshot(collection(db, "services"), (snapshot) => {
   isLoading.value = true;
@@ -29,17 +33,68 @@ watch(
   },
   { deep: true }
 );
-</script>
 
+const editService = (service: Service) => {};
+const removeServices = () => {};
+const selectedService = computed(() => {
+  return services.value.find((s) => s.id === selectedServiceId.value[0]);
+});
+</script>
 
 <template>
   <div class="flex flex-col gap-4 p-2 w-full">
     <div class="flex justify-between w-full">
       <h2 class="font-bold text-lg">Dostępne stałe usługi</h2>
-      <add-service-dialog/>
+
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2">
+          <v-btn
+            :disabled="isLoading || selectedServiceId.length === 0"
+            icon="mdi-trash-can-outline"
+            size="30"
+            height="30"
+            class="text-xs"
+            @click="showConfirmDialog = true"
+          />
+          <!-- <v-btn
+            height="30"
+            :disabled="isLoading || selectedServiceId.length !== 1"
+          >
+            <v-icon icon="mdi-playlist-edit" class="mr-2" />
+            <span class="text-xs">Edytuj</span>
+          </v-btn> -->
+          <edit-service-dialog
+            :selected-service="selectedService"
+            :disabled="isLoading || selectedServiceId.length !== 1"
+          />
+        </div>
+        <add-service-dialog />
+      </div>
     </div>
 
-    <v-data-table :loading="isLoading" :items="services" :headers="headers" </v-data-table>
+    <v-data-table
+      :loading="isLoading"
+      :items="services"
+      :headers="headers"
+      :show-select="true"
+      select-strategy="all"
+      v-model="selectedServiceId"
+    >
+    </v-data-table>
+
+    <confirm-dialog
+      title="Potwierdź usunięcie"
+      :description="
+        'Czy na pewno chcesz usunąć wybrane usługi? ' +
+        services.map((s) => {
+          if (selectedServiceId.find((sS) => sS === s.id)) {
+            return s.name + ' ';
+          }
+        })
+      "
+      v-model:showDialog="showConfirmDialog"
+      @confirm="removeServices"
+    />
   </div>
 </template>
 

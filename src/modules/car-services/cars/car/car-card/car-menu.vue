@@ -26,7 +26,7 @@ const removeCar = async () => {
 
 const items = [
   { title: "Drukuj raport", onClick: handlePrint },
-  { title: "Edytuj" },
+  { title: "Edytuj", onClick: () => {} },
   { title: "Usuń pojazd", onClick: handleRemoveCar },
 ];
 </script>
