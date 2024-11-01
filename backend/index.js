@@ -11,7 +11,7 @@ admin.initializeApp({
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json()); // Obsługuje JSON w żądaniach
+app.use(bodyParser.json());
 
 app.get("/api/users", async (req, res) => {
   try {
