@@ -8,6 +8,7 @@ import ServicesTable from "./modules/car-services/services/services-table.vue";
 import OrdersTable from "./modules/car-services/orders/orders-table.vue";
 import CarsView from "./modules/car-services/cars/cars-view.vue";
 import CarOrdersView from "./modules/car-services/car-oreders/car-orders-view.vue";
+import UsersView from "./modules/car-services/users/users-view.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -40,6 +41,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: "/cars",
         component: CarsView,
+      },
+      {
+        path: "/users",
+        component: UsersView,
       },
     ],
   },

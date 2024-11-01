@@ -3,12 +3,14 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
+import { useTheme } from "../../composables/useTheme";
 
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const errorMessage = ref("");
 const router = useRouter();
+const { color } = useTheme();
 
 const register = async () => {
   if (password.value !== confirmPassword.value) {
@@ -57,7 +59,7 @@ const register = async () => {
 
       <v-btn
         @click="register"
-        color="rgb(249 115 22)"
+        :color="color"
         height="30"
         variant="elevated"
         class="text-white w-full"

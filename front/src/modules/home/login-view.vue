@@ -3,11 +3,13 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebase.config";
+import { useTheme } from "../../composables/useTheme";
 
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
 const router = useRouter();
+const { color } = useTheme();
 
 const login = async () => {
   try {
@@ -42,7 +44,7 @@ const login = async () => {
 
       <v-btn
         @click="login"
-        color="rgb(249 115 22)"
+        :color="color"
         height="30"
         variant="elevated"
         class="text-white w-full"

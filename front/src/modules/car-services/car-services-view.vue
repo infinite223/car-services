@@ -4,9 +4,7 @@ import AppLogo from "../../components/app-logo.vue";
 import { auth } from "../../services/firebase.config";
 import { useRouter } from "vue-router";
 import { navigationItems } from "./navigation.config";
-import { useFirebaseAuth } from "vuefire";
-
-// const auth = useFirebaseAuth()!
+import ColorSettings from "../../components/ColorSettings.vue";
 
 const router = useRouter();
 onAuthStateChanged(auth, (user) => {
@@ -44,6 +42,9 @@ const logOut = async () => {
           <v-icon icon="mdi-logout" class="mr-4" size="20" />
           <span> Wyloguj </span>
         </div>
+      </div>
+      <div class="mt-auto">
+        <color-settings />
       </div>
     </div>
     <div class="flex w-full p-2 px-4 bg-zinc-100">

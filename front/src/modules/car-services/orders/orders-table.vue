@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { orders } from '../../../utils/mocked.data';
-import addOrderDialog from './add-order-dialog.vue';
+import { ref } from "vue";
+import { orders } from "../../../utils/mocked.data";
+import addOrderDialog from "./add-order-dialog.vue";
 const isLoading = ref(false);
 
 const headers = [
@@ -16,12 +16,17 @@ const headers = [
 <template>
   <div class="flex flex-col gap-4 p-2 w-full">
     <div class="flex justify-between w-full">
-      <h2 class="font-bold text-lg">Aktualne zamówienia</h2>
-      
-      <add-order-dialog/>
+      <h2 class="font-semibold text-lg">Aktualne zamówienia</h2>
+
+      <add-order-dialog />
     </div>
 
-    <v-data-table :loading="isLoading" class="overflow-auto" :items="orders" :headers="headers" </v-data-table>
+    <v-data-table
+      :loading="isLoading"
+      class="overflow-auto"
+      :items="orders"
+      :headers="headers"
+    />
   </div>
 </template>
 

@@ -7,6 +7,7 @@ import { Service } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
 import AddExistServiceDialog from "./add-exist-service-dialog.vue";
 import { CarServiceCreateDto } from "../../../api.models";
+import { useTheme } from "../../../../../composables/useTheme";
 
 const props = defineProps({
   carId: {
@@ -34,6 +35,7 @@ const rules = {
 
 const v$ = useVuelidate(rules, state);
 const showDialog = ref(false);
+const { color } = useTheme();
 function close() {
   v$.value.$reset();
   Object.assign(state, initialState);
@@ -69,10 +71,11 @@ const submit = async () => {
 <template>
   <v-dialog max-width="500" v-model="showDialog">
     <template v-slot:activator="{ props: activatorProps }">
-      <v-btn v-bind="activatorProps" color="rgb(249 115 22)" height="30">
+      <!-- TODO -->
+      <!-- <v-btn v-bind="activatorProps" :color="color" height="30">
         <v-icon icon="mdi-plus" color="white" class="mr-2" />
         <span class="text-white text-xs">Dodaj</span>
-      </v-btn>
+      </v-btn> -->
     </template>
 
     <template v-slot:default="{ isActive }">

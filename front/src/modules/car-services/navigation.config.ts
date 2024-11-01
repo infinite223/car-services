@@ -15,4 +15,9 @@ export const navigationItems = [
     name: "Pojazdy",
     icon: "mdi-car-multiple",
   },
+  {
+    path: "/users",
+    name: "Użytkownicy",
+    icon: "mdi-account-group",
+  },
 ];

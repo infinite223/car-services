@@ -28,3 +28,11 @@ export interface CarService {
   startDate?: Timestamp;
   executeDate?: Timestamp;
 }
+
+export type User = {
+  uid: string;
+  email: string;
+  displayName?: string;
+  photoURL?: string;
+  phoneNumber?: string;
+};

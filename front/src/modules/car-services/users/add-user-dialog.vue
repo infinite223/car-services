@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { required } from "@vuelidate/validators";
+import { required, minLength } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../../services/firebase.config";
-import { ServiceCreateDto } from "../api.models";
+import axios from "axios";
+import { useToast } from "vue-toast-notification";
 
+const emit = defineEmits(["refreshData"]);
+const toast = useToast();
 const initialState = {
   name: "",
-  description: "",
-  price: 0,
+  email: "",
+  phoneNumber: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const state = reactive({
@@ -18,32 +21,44 @@ const state = reactive({
 
 const rules = {
   name: { required },
-  description: { required },
-  price: { required },
+  email: { required },
+  phoneNumber: {},
+  password: { required, minLength: minLength(8) },
 };
 
 const v$ = useVuelidate(rules, state);
 const showDialog = ref(false);
+
 function close() {
   v$.value.$reset();
   Object.assign(state, initialState);
-  state;
   showDialog.value = false;
 }
 
-const submit = async () => {
+async function CreateUser() {
   const result = await v$.value.$validate();
 
-  if (!result) {
-    return;
-  }
-  const newService: ServiceCreateDto = {
-    ...state,
-  };
-  await addDoc(collection(db, "services"), newService);
+  if (!result) return;
 
-  close();
-};
+  try {
+    await axios.post("http://localhost:5000/api/users", {
+      displayName: state.name,
+      email: state.email,
+      phoneNumber: state.phoneNumber,
+      password: state.password,
+    });
+
+    toast.success(`Udało się dodać użytkonika.`);
+    emit("refreshData");
+    close();
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data);
+    } else {
+      toast.error("Nieoczekiwany błąd:", error.message);
+    }
+  }
+}
 </script>
 
 <template>
@@ -58,11 +73,11 @@ const submit = async () => {
     <template v-slot:default="{ isActive }">
       <v-card>
         <template #title>
-          <h2 class="font-semibold text-xl">Dodaj usługe</h2>
+          <h2 class="font-semibold text-xl">Dodaj użytkownika</h2>
         </template>
 
         <v-card-text>
-          <form>
+          <form autocomplete="off">
             <v-text-field
               v-model="state.name"
               :error-messages="v$.name.$errors.map((e) => e.$message) as any"
@@ -74,23 +89,34 @@ const submit = async () => {
             ></v-text-field>
 
             <v-text-field
-              v-model="state.description"
-              :error-messages="v$.description.$errors.map((e) => e.$message) as any"
-              label="Opis"
+              v-model="state.email"
+              :error-messages="v$.email.$errors.map((e) => e.$message) as any"
+              label="Email"
               variant="underlined"
               required
-              @blur="v$.description.$touch"
-              @input="v$.description.$touch"
+              @blur="v$.email.$touch"
+              @input="v$.email.$touch"
             ></v-text-field>
 
             <v-text-field
-              v-model="state.price"
-              :error-messages="v$.price.$errors.map((e) => e.$message) as any"
-              label="Cena usługi (bez części)"
+              v-model="state.phoneNumber"
+              :error-messages="v$.phoneNumber.$errors.map((e) => e.$message) as any"
+              label="Numer telefonu (+48 732 324 432)"
+              variant="underlined"
+              @blur="v$.phoneNumber.$touch"
+              @input="v$.phoneNumber.$touch"
+            ></v-text-field>
+
+            <v-text-field
+              v-model="state.password"
+              :error-messages="v$.password.$errors.map((e) => e.$message) as any"
+              label="Hasło"
+              autocomplete="off"
+              type="password"
               variant="underlined"
               required
-              @blur="v$.price.$touch"
-              @input="v$.price.$touch"
+              @blur="v$.password.$touch"
+              @input="v$.password.$touch"
             ></v-text-field>
           </form>
         </v-card-text>
@@ -104,7 +130,7 @@ const submit = async () => {
             height="30"
             variant="elevated"
             class="px-4"
-            @click="submit"
+            @click="CreateUser"
             ><span class="text-white text-xs">Dodaj</span></v-btn
           >
         </v-card-actions>

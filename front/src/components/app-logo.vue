@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useTheme } from "../composables/useTheme";
+
 defineProps({
   fontSize: {
     type: Number,
@@ -6,6 +8,7 @@ defineProps({
     default: 25,
   },
 });
+const { color } = useTheme();
 </script>
 
 <template>
@@ -14,7 +17,7 @@ defineProps({
     :style="{ fontSize: fontSize + 'px' }"
   >
     <span>Car</span>
-    <span class="text-orange-500 h-10">Service </span>
+    <span class="h-10" :style="{ color: color }">Service </span>
     <v-icon
       size="30"
       class="translate-y-[-10px] translate-x-[-2px] rotate-[30deg]"

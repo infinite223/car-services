@@ -22,7 +22,7 @@ const headers = [
 const showConfirmDialog = ref(false);
 const isLoading = ref(true);
 const services = ref<Service[]>([]);
-const selectedServiceId = ref<string[]>([]);
+const selectedServicesIds = ref<string[]>([]);
 
 onSnapshot(collection(db, "services"), (snapshot) => {
   isLoading.value = true;
@@ -41,11 +41,13 @@ watch(
 );
 
 const removeServices = async () => {
-  await deleteDoc(doc(db, "services", selectedService.value.id));
+  selectedServicesIds.value.forEach(async (id) => {
+    await deleteDoc(doc(db, "services", id));
+  });
 };
 
 const selectedService = computed(() => {
-  return services.value.find((s) => s.id === selectedServiceId.value[0]);
+  return services.value.find((s) => s.id === selectedServicesIds.value[0]);
 });
 </script>
 
@@ -57,7 +59,7 @@ const selectedService = computed(() => {
       <div class="flex items-center gap-2">
         <div class="flex items-center gap-2">
           <v-btn
-            :disabled="isLoading || selectedServiceId.length === 0"
+            :disabled="isLoading || selectedServicesIds.length === 0"
             icon="mdi-trash-can-outline"
             size="30"
             height="30"
@@ -66,14 +68,14 @@ const selectedService = computed(() => {
           />
           <!-- <v-btn
             height="30"
-            :disabled="isLoading || selectedServiceId.length !== 1"
+            :disabled="isLoading || selectedServicesIds.length !== 1"
           >
             <v-icon icon="mdi-playlist-edit" class="mr-2" />
             <span class="text-xs">Edytuj</span>
           </v-btn> -->
           <edit-service-dialog
             :selected-service="selectedService"
-            :disabled="isLoading || selectedServiceId.length !== 1"
+            :disabled="isLoading || selectedServicesIds.length !== 1"
           />
         </div>
         <add-service-dialog />
@@ -86,7 +88,7 @@ const selectedService = computed(() => {
       :headers="headers"
       :show-select="true"
       select-strategy="all"
-      v-model="selectedServiceId"
+      v-model="selectedServicesIds"
     >
     </v-data-table>
 
@@ -95,7 +97,7 @@ const selectedService = computed(() => {
       :description="
         'Czy na pewno chcesz usunąć wybrane usługi? ' +
         services.map((s) => {
-          if (selectedServiceId.find((sS) => sS === s.id)) {
+          if (selectedServicesIds.find((sS) => sS === s.id)) {
             return s.name + ' ';
           }
         })

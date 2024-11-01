@@ -1,5 +1,6 @@
 import "@mdi/font/css/materialdesignicons.css";
 import "@fortawesome/fontawesome-free/css/all.css";
+import "vue-toast-notification/dist/theme-bootstrap.css";
 import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
@@ -12,6 +13,7 @@ import { VueFire, VueFireAuth } from "vuefire";
 import { app } from "./services/firebase.config";
 import { VueHtmlToPaper } from "vue-html-to-paper";
 import { VDateInput } from "vuetify/lib/labs/components.mjs";
+import ToastPlugin from "vue-toast-notification";
 
 const options = {
   name: "_blank",
@@ -36,6 +38,7 @@ const vuetify = createVuetify({
 createApp(App)
   .use(vuetify)
   .use(router)
+  .use(ToastPlugin)
   .use(VueFire, {
     firebaseApp: app,
     modules: [VueFireAuth()],
