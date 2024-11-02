@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useTheme } from "../../../composables/useTheme";
+
 defineProps({
   title: {
     required: true,
@@ -15,7 +17,7 @@ defineProps({
 });
 
 const emit = defineEmits(["confirm", "update:showDialog"]);
-
+const { color } = useTheme();
 function closeDialog() {
   emit("update:showDialog", false);
 }
@@ -33,8 +35,6 @@ function closeDialog() {
           <h2 class="font-semibold text-xl">{{ title }}</h2>
         </template>
 
-        <!-- <template #subtitle v-if="description"> </template> -->
-
         <h2 class="text-md mt-2 px-6 font-thin" v-if="description">
           {{ description }}
         </h2>
@@ -43,7 +43,7 @@ function closeDialog() {
             <span class="text-xs">Anuluj</span>
           </v-btn>
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             variant="elevated"
             class="px-4"

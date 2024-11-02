@@ -72,10 +72,10 @@ const submit = async () => {
   <v-dialog max-width="500" v-model="showDialog">
     <template v-slot:activator="{ props: activatorProps }">
       <!-- TODO -->
-      <!-- <v-btn v-bind="activatorProps" :color="color" height="30">
+      <v-btn v-bind="activatorProps" :color="color" height="30">
         <v-icon icon="mdi-plus" color="white" class="mr-2" />
         <span class="text-white text-xs">Dodaj</span>
-      </v-btn> -->
+      </v-btn>
     </template>
 
     <template v-slot:default="{ isActive }">
@@ -136,7 +136,7 @@ const submit = async () => {
             @set-select="handleSelect"
           />
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             variant="elevated"
             class="px-4"

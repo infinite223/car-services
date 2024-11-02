@@ -5,7 +5,9 @@ import { reactive, ref } from "vue";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../../../services/firebase.config";
 import { CarCreateDto } from "../api.models";
+import { useTheme } from "../../../composables/useTheme";
 
+const { color } = useTheme();
 const initialState: CarCreateDto = {
   make: "",
   model: "",
@@ -51,7 +53,7 @@ const submit = async () => {
 <template>
   <v-dialog max-width="500" v-model="showDialog">
     <template v-slot:activator="{ props: activatorProps }">
-      <v-btn v-bind="activatorProps" color="rgb(249 115 22)" height="30">
+      <v-btn v-bind="activatorProps" :color="color" height="30">
         <v-icon icon="mdi-plus" color="white" class="mr-2" />
         <span class="text-white text-xs">Przyjmij samochód</span>
       </v-btn>
@@ -102,7 +104,7 @@ const submit = async () => {
             <span class="text-xs">Anuluj</span>
           </v-btn>
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             variant="elevated"
             class="px-4"

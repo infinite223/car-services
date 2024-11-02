@@ -102,7 +102,7 @@ const submit = async () => {
             <span class="text-xs">Anuluj</span>
           </v-btn>
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             variant="elevated"
             class="px-4"

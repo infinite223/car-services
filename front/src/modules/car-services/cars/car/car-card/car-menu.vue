@@ -64,7 +64,7 @@ const items = [
       ' ' +
       car.make +
       ' ' +
-      car.model.toUpperCase()
+      car.model?.toUpperCase()
     "
     v-model:showDialog="showDialog"
     @confirm="removeCar"
@@ -82,7 +82,7 @@ const items = [
         </div>
         <div style="margin: 2px 0px">
           <span>Model: </span>
-          <span>{{ props.car.model.toUpperCase() }}</span>
+          <span>{{ props.car.model?.toUpperCase() }}</span>
         </div>
         <div style="margin: 2px 0px">
           <span>Vin: </span>

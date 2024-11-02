@@ -5,8 +5,11 @@ import { required } from "@vuelidate/validators";
 import axios from "axios";
 import { User } from "../models";
 import { useToast } from "vue-toast-notification";
+import { useTheme } from "../../../composables/useTheme";
 
 const emit = defineEmits(["refreshData"]);
+const { color } = useTheme();
+
 const props = defineProps({
   user: {
     type: Object as PropType<User>,
@@ -19,7 +22,6 @@ const props = defineProps({
 });
 const toast = useToast();
 
-// const props = defineProps<{ user: User; onClose: () => void }>();
 const state = reactive({
   displayName: "",
   phoneNumber: "",
@@ -95,7 +97,7 @@ function close() {
         <v-card-actions>
           <v-btn @click="close">Anuluj</v-btn>
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             @click="save"
             variant="elevated"

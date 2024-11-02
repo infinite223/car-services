@@ -4,9 +4,11 @@ import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
 import axios from "axios";
 import { useToast } from "vue-toast-notification";
+import { useTheme } from "../../../composables/useTheme";
 
 const emit = defineEmits(["refreshData"]);
 const toast = useToast();
+const { color } = useTheme();
 const initialState = {
   name: "",
   email: "",
@@ -64,7 +66,7 @@ async function CreateUser() {
 <template>
   <v-dialog max-width="500" v-model="showDialog">
     <template v-slot:activator="{ props: activatorProps }">
-      <v-btn v-bind="activatorProps" color="rgb(249 115 22)" height="30">
+      <v-btn v-bind="activatorProps" :color="color" height="30">
         <v-icon icon="mdi-plus" color="white" class="mr-2" />
         <span class="text-white text-xs">Dodaj</span>
       </v-btn>
@@ -126,7 +128,7 @@ async function CreateUser() {
             <span class="text-xs">Anuluj</span>
           </v-btn>
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             variant="elevated"
             class="px-4"

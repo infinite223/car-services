@@ -2,6 +2,7 @@
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { reactive } from "vue";
+import { useTheme } from "../../../composables/useTheme";
 
 const initialState = {
   name: "",
@@ -24,6 +25,7 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, state);
+const { color } = useTheme();
 
 function close() {
   v$.value.$reset();
@@ -35,7 +37,7 @@ function close() {
 <template>
   <v-dialog max-width="500">
     <template v-slot:activator="{ props: activatorProps }">
-      <v-btn v-bind="activatorProps" color="rgb(249 115 22)" height="30">
+      <v-btn v-bind="activatorProps" :color="color" height="30">
         <v-icon icon="mdi-plus" color="white" class="mr-2" />
         <span class="text-white text-xs">Zamów</span>
       </v-btn>
@@ -118,7 +120,7 @@ function close() {
             <span class="text-xs">Anuluj</span>
           </v-btn>
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             variant="elevated"
             class="px-4"

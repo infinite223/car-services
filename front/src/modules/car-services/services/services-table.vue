@@ -66,13 +66,6 @@ const selectedService = computed(() => {
             class="text-xs"
             @click="showConfirmDialog = true"
           />
-          <!-- <v-btn
-            height="30"
-            :disabled="isLoading || selectedServicesIds.length !== 1"
-          >
-            <v-icon icon="mdi-playlist-edit" class="mr-2" />
-            <span class="text-xs">Edytuj</span>
-          </v-btn> -->
           <edit-service-dialog
             :selected-service="selectedService"
             :disabled="isLoading || selectedServicesIds.length !== 1"

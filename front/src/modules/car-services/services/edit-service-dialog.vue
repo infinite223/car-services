@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import { onMounted, PropType, reactive, ref } from "vue";
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { PropType, reactive, ref } from "vue";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../services/firebase.config";
 import { ServiceCreateDto } from "../api.models";
 import { Service } from "../models";
@@ -17,6 +17,7 @@ const props = defineProps({
     type: Boolean,
   },
 });
+const { color } = useTheme();
 
 const initialState = {
   name: "",
@@ -58,6 +59,7 @@ const submit = async () => {
   close();
 };
 import { watch } from "vue";
+import { useTheme } from "../../../composables/useTheme";
 
 watch(
   () => props.selectedService,
@@ -124,7 +126,7 @@ watch(
             <span class="text-xs">Anuluj</span>
           </v-btn>
           <v-btn
-            color="rgb(249 115 22)"
+            :color="color"
             height="30"
             variant="elevated"
             class="px-4"

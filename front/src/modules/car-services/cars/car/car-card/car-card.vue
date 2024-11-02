@@ -22,7 +22,7 @@ const props = defineProps({
   >
     <template #title>
       <div class="w-full flex items-center justify-between">
-        <span>{{ props.car.model.toUpperCase() }}</span>
+        <span>{{ props.car.model?.toUpperCase() }}</span>
         <car-menu :car="props.car" />
       </div>
     </template>
@@ -65,7 +65,6 @@ const props = defineProps({
             <div class="ml-1" v-if="!props.car.services">
               Aktualnie nie ma usług
             </div>
-            <!-- <v-btn class="w-full">Dodaj usługe</v-btn> -->
             <add-car-service-dialog :car-id="car.id" />
           </div>
         </v-card-text>
