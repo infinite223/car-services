@@ -48,15 +48,6 @@ const logOut = async () => {
       </div>
     </div>
     <div class="flex w-full p-2 px-4 bg-zinc-100">
-      <!-- TODO - 
-     
-     - clients
-     - usługi - dodawanie usług dla pojazdu  
-     - faktury/podsumowanie - dla pojazdu lub na miesiąc, rozliczenia 
-     - zamówienia - potwierdzanie ->  na magazyn 
-     - magazyn - części samochodowe
-    
-    -->
       <RouterView />
     </div>
   </div>

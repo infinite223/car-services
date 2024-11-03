@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-  Timestamp,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { Service } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
 
@@ -33,7 +26,6 @@ const showDialog = ref(false);
 
 function close() {
   showDialog.value = false;
-  // emit("closeDialog");
 }
 
 const submit = async () => {
@@ -66,7 +58,7 @@ onMounted(async () => {
       >
     </template>
 
-    <template v-slot:default="{ isActive }">
+    <template v-slot:default="{}">
       <v-card>
         <template #title>
           <h2 class="font-semibold text-xl">Dodaj istniejącą usługe</h2>

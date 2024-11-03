@@ -2,7 +2,7 @@
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { reactive, ref } from "vue";
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { Service } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
 import AddExistServiceDialog from "./add-exist-service-dialog.vue";

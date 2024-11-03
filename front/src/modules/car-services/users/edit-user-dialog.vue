@@ -45,11 +45,7 @@ watch(
   }
 );
 
-// Funkcja zapisu edytowanego użytkownika
 async function save() {
-  //   v$.$validate();
-  //   if (v$.$pending) return;
-
   try {
     await axios.put(`http://localhost:5000/api/users/${props.user!.uid}`, {
       displayName: state.displayName,
@@ -77,7 +73,7 @@ function close() {
         <span class="text-xs">Edytuj</span>
       </v-btn>
     </template>
-    <template v-slot:default="{ isActive }">
+    <template v-slot:default="{}">
       <v-card>
         <v-card-title>Edytuj użytkownika</v-card-title>
         <v-card-text>

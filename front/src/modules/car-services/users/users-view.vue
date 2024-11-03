@@ -11,7 +11,6 @@ import ConfirmDialog from "../../core/components/confirm-dialog.vue";
 import { useToast } from "vue-toast-notification";
 
 const toast = useToast();
-const loggedUser = ref<User | null>(null);
 const users = ref<User[]>([]);
 const router = useRouter();
 const showConfirmDialog = ref(false);
@@ -91,7 +90,7 @@ onMounted(() => fetchUsers());
       item-value="uid"
       :show-select="true"
       select-strategy="all"
-      class="overflow-auto"
+      class="overflow-auto" 
       :items="users"
       :headers="headers"
       v-model="selectedUsersIds"
