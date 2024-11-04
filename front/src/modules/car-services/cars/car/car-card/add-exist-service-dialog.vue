@@ -3,13 +3,16 @@ import { onMounted, ref } from "vue";
 import { collection, getDocs } from "firebase/firestore";
 import { Service } from "../../../models";
 import { db } from "../../../../../services/firebase.config";
+import { useTheme } from "../../../../../composables/useTheme";
 
-const props = defineProps({
+defineProps({
   carId: {
     required: true,
     type: String,
   },
 });
+
+const { color } = useTheme();
 
 const emit = defineEmits(["setSelect"]);
 
@@ -82,7 +85,7 @@ onMounted(async () => {
 
           <v-btn
             :disabled="selectedServiceId.length === 0"
-            :color="selectedServiceId.length !== 0 ? 'rgb(249 115 22)' : 'gray'"
+            :color="selectedServiceId.length !== 0 ? color : 'gray'"
             height="30"
             variant="elevated"
             class="px-4"
