@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useTheme } from "../../../composables/useTheme";
+import CustomInput from "../../../components/custom-input.vue";
 
 const initialState = {
   name: "",
   description: "",
   engineNumber: "",
   make: "",
-  model: "",
+  year: null,
+  hasWarranty: false,
+  fuelType: "",
+  services: [],
+  additionalNotes: "",
 };
 
 const state = reactive({
@@ -21,21 +26,34 @@ const rules = {
   description: { required },
   engineNumber: { required },
   make: { required },
-  model: { required },
+  year: { required },
+  fuelType: { required },
 };
 
 const v$ = useVuelidate(rules, state);
+const showDialog = ref(false);
 const { color } = useTheme();
 
 function close() {
+  reset();
+  showDialog.value = false;
+}
+
+function reset() {
   v$.value.$reset();
   Object.assign(state, initialState);
-  state;
+}
+
+function submitForm() {
+  if (v$.value.$validate()) {
+    console.log("Form data:", { ...state });
+    close();
+  }
 }
 </script>
 
 <template>
-  <v-dialog max-width="500">
+  <v-dialog max-width="500" v-model="showDialog">
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn v-bind="activatorProps" :color="color" height="30">
         <v-icon icon="mdi-plus" color="white" class="mr-2" />
@@ -81,42 +99,78 @@ function close() {
               @input="v$.engineNumber.$touch"
             ></v-text-field>
 
-            <v-row>
-              <v-col cols="6">
-                <v-text-field
-                  v-model="state.make"
-                  :error-messages="v$.make.$errors.map((e) => e.$message) as any"
-                  label="Marka"
-                  variant="underlined"
-                  required
-                  @blur="v$.make.$touch"
-                  @input="v$.make.$touch"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="6">
-                <v-text-field
-                  v-model="state.model"
-                  :error-messages="v$.model.$errors.map((e) => e.$message) as any"
-                  label="Model"
-                  variant="underlined"
-                  required
-                  @blur="v$.model.$touch"
-                  @input="v$.model.$touch"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+            <v-text-field
+              v-model="state.year"
+              type="number"
+              :error-messages="v$.year.$errors.map((e) => e.$message) as any"
+              label="Rok produkcji"
+              variant="underlined"
+              required
+              @blur="v$.year.$touch"
+              @input="v$.year.$touch"
+            ></v-text-field>
+
+            <v-checkbox
+              v-model="state.hasWarranty"
+              label="Posiada gwarancję"
+            ></v-checkbox>
+
+            <v-radio-group
+              v-model="state.fuelType"
+              :error-messages="v$.fuelType.$errors.map((e) => e.$message) as any"
+              label="Rodzaj paliwa"
+              required
+            >
+              <v-radio label="Benzyna" value="Benzyna"></v-radio>
+              <v-radio label="Diesel" value="Diesel"></v-radio>
+              <v-radio label="Elektryczny" value="Elektryczny"></v-radio>
+            </v-radio-group>
+
+            <div>
+              <label class="ml-2 mb-2 font-thin text-sm"
+                >Usługi dodatkowe</label
+              >
+              <v-checkbox
+                v-model="state.services"
+                label="Przegląd techniczny"
+                value="Przegląd techniczny"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                v-model="state.services"
+                label="Wymiana opon"
+                value="Wymiana opon"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                v-model="state.services"
+                label="Wymiana oleju"
+                value="Wymiana oleju"
+                hide-details
+              ></v-checkbox>
+            </div>
+
+            <v-select
+              v-model="state.make"
+              :items="['Toyota', 'Ford', 'BMW', 'Audi']"
+              label="Marka"
+              variant="underlined"
+              required
+            ></v-select>
+
+            <custom-input
+              label="Dodatkowe informacje"
+              :modelValue="state.additionalNotes"
+              @update:modelValue="($event) => (state.additionalNotes = $event)"
+            ></custom-input>
           </form>
         </v-card-text>
 
         <v-card-actions class="flex items-center gap-5">
-          <v-btn
-            @click="
-              () => {
-                close();
-                isActive.value = false;
-              }
-            "
-          >
+          <v-btn @click="reset()">
+            <span class="text-xs">Czyść</span>
+          </v-btn>
+          <v-btn @click="close()">
             <span class="text-xs">Anuluj</span>
           </v-btn>
           <v-btn
@@ -124,9 +178,10 @@ function close() {
             height="30"
             variant="elevated"
             class="px-4"
-            @click="v$.$validate"
-            ><span class="text-white text-xs">Zamów</span></v-btn
+            @click="submitForm"
           >
+            <span class="text-white text-xs">Wyślij</span>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </template>
