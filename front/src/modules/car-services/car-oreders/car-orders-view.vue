@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { db } from '../../../services/firebase.config';
 import { collectionGroup, onSnapshot } from "firebase/firestore";
 import { Service } from '../models';
@@ -17,10 +17,6 @@ const services = ref<Service[]>([])
 onSnapshot(collectionGroup(db, "car-orders"), (doc) => {
     services.value = doc.docs.map((doc) => { return {...doc.data(), id: doc.id} as Service } );
 });
-
-watch(services, () => {
-  console.log("documentsArray.value outside snapshot", services.value);
-},{deep:true})
 </script>
 
 <template>

@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { db } from "../../../services/firebase.config";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Service } from "../models";
 import addServiceDialog from "./add-service-dialog.vue";
 import editServiceDialog from "./edit-service-dialog.vue";
@@ -31,14 +25,6 @@ onSnapshot(collection(db, "services"), (snapshot) => {
   });
   isLoading.value = false;
 });
-
-watch(
-  services,
-  () => {
-    console.log("documentsArray.value outside snapshot", services.value);
-  },
-  { deep: true }
-);
 
 const removeServices = async () => {
   selectedServicesIds.value.forEach(async (id) => {

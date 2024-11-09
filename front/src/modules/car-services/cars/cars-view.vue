@@ -34,14 +34,6 @@ async function getCarsWithServices() {
 }
 
 getCarsWithServices();
-
-watch(
-  cars,
-  () => {
-    console.log("Zaktualizowane dane pojazdów:", cars.value);
-  },
-  { deep: true }
-);
 </script>
 
 <template>
