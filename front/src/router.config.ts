@@ -9,6 +9,10 @@ import OrdersTable from "./modules/car-services/orders/orders-table.vue";
 import CarsView from "./modules/car-services/cars/cars-view.vue";
 import CarOrdersView from "./modules/car-services/car-oreders/car-orders-view.vue";
 import UsersView from "./modules/car-services/users/users-view.vue";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./services/firebase.config";
+import NotFoundView from "./modules/car-services/not-found-view.vue";
+import CarsDetailView from "./modules/car-services/cars/car/cars-detail-view.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -28,8 +32,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/car-services",
     component: CarServicesView,
+    meta: { requiresAuth: true },
     children: [
-      { path: "/car-services", component: ServicesTable },
+      {
+        path: "/car-services",
+        component: ServicesTable,
+        alias: "/car-services",
+      },
       {
         path: "/orders",
         component: OrdersTable,
@@ -41,6 +50,13 @@ const routes: RouteRecordRaw[] = [
       {
         path: "/cars",
         component: CarsView,
+        children: [
+          {
+            path: "detail/:id",
+            component: CarsDetailView,
+            props: true,
+          },
+        ],
       },
       {
         path: "/users",
@@ -48,9 +64,31 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: "/:pathMatch(.*)*",
+    component: NotFoundView,
+  },
 ];
 
 export const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+
+  if (requiresAuth) {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        next();
+      } else {
+        next("/");
+      }
+    });
+  } else {
+    next();
+  }
+});
+
+export default router;
