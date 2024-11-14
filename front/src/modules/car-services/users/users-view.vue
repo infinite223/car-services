@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { auth } from "../../../services/firebase.config";
 import { useRouter } from "vue-router";
 import { onAuthStateChanged } from "firebase/auth";
@@ -14,6 +14,8 @@ const toast = useToast();
 const users = ref<User[]>([]);
 const router = useRouter();
 const showConfirmDialog = ref(false);
+const isAdmin = ref(false);
+const loggedUserId = ref("")
 
 const selectedUsersIds = ref<string[]>([]);
 
@@ -27,20 +29,37 @@ const headers = [
 
 async function fetchUsers() {
   try {
-    const response = await axios.get("http://localhost:5000/api/users");
+    const response = await axios.get("http://localhost:5005/api/users");
     users.value = response.data as User[];
   } catch (error) {
     console.error("Błąd podczas pobierania użytkowników:", error);
   }
 }
 
+async function checkUserRole(userId) {
+  try {
+    const response = await axios.get(`http://localhost:5005/api/check-admin/${userId}`);
+    
+    if (response.data.success) {
+      isAdmin.value = response.data.isAdmin;
+    } else {
+      console.log('Użytkownik nie istnieje lub wystąpił błąd');
+      isAdmin.value = false;
+    }
+  } catch (error) {
+    console.error('Błąd podczas sprawdzania roli użytkownika:', error);
+    isAdmin.value = false;
+  }
+}
+
+
 const removeUsers = async () => {
   try {
-    await axios.delete("http://localhost:5000/api/users", {
+    await axios.delete("http://localhost:5005/api/users", {
       data: { uids: selectedUsersIds.value },
     });
     showConfirmDialog.value = false;
-    await fetchUsers();
+    await fetchUsers();   
     toast.success(
       `Udało się usunąć ${
         selectedUsersIds.value.length > 1 ? "użytkoników." : "użytkonika."
@@ -60,9 +79,15 @@ onAuthStateChanged(auth, (user) => {
   if (!user) {
     router.push("/");
   }
+
+  loggedUserId.value = user.uid;
 });
 
-onMounted(() => fetchUsers());
+watch(loggedUserId, ()=> {
+  checkUserRole(loggedUserId.value)
+})
+
+onMounted(() => { fetchUsers()});
 </script>
 
 <template>
@@ -71,6 +96,7 @@ onMounted(() => fetchUsers());
       <h2 class="font-semibold text-lg">Użytkonicy</h2>
       <div class="flex items-center gap-2">
         <v-btn
+          v-if="isAdmin"
           :disabled="selectedUsersIds.length === 0"
           icon="mdi-trash-can-outline"
           size="30"
@@ -79,6 +105,7 @@ onMounted(() => fetchUsers());
           @click="showConfirmDialog = true"
         />
         <edit-user-dialog
+          v-if="isAdmin"
           @refresh-data="fetchUsers"
           :user="selectedUser"
           :disabled="selectedUsersIds.length !== 1"
@@ -88,7 +115,7 @@ onMounted(() => fetchUsers());
     </div>
     <v-data-table
       item-value="uid"
-      :show-select="true"
+      :show-select="isAdmin"
       select-strategy="all"
       class="overflow-auto" 
       :items="users"

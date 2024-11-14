@@ -13,6 +13,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./services/firebase.config";
 import NotFoundView from "./modules/car-services/not-found-view.vue";
 import CarsDetailView from "./modules/car-services/cars/car/cars-detail-view.vue";
+import CarView from "./modules/car-services/car/car-view.vue";
+import StorageView from "./modules/car-services/storage/storage-view.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -50,17 +52,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: "/cars",
         component: CarsView,
-        children: [
-          {
-            path: "detail/:id",
-            component: CarsDetailView,
-            props: true,
-          },
-        ],
+      },
+      {
+        path: "/car/:id",
+        component: CarView,
+        props: true
       },
       {
         path: "/users",
         component: UsersView,
+      },
+      {
+        path: "/storage",
+        component: StorageView,
       },
     ],
   },

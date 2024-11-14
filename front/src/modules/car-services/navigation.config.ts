@@ -20,4 +20,9 @@ export const navigationItems = [
     name: "Użytkownicy",
     icon: "mdi-account-group",
   },
+  {
+    path: "/storage",
+    name: "Galeria",
+    icon: "mdi-image-area",
+  },
 ];
