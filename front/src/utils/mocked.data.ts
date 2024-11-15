@@ -1,10 +1,7 @@
-import {
-  OrderElementDto,
-  Service,
-  ServiceDto,
-} from "../modules/car-services/models";
+import { OrderElementCreateDto } from "../modules/car-services/api.models";
+import { Service } from "../modules/car-services/models";
 
-export const orders: OrderElementDto[] = [
+export const orders: OrderElementCreateDto[] = [
   {
     id: "1",
     name: "Silnik",
@@ -125,27 +122,23 @@ export const services: Service[] = [
     name: "Wymiana oleju",
     price: 120,
     description: "",
-    done: false,
   },
   {
     id: "2",
     name: "Wymiana rozrządu",
     price: 600,
     description: "Wymiana całego kąpletnego rozrządu",
-    done: false,
   },
   {
     id: "3",
     name: "Zmiana opeon",
     price: 70,
     description: "",
-    done: false,
   },
   {
     id: "4",
     name: "Podstawowa diagnostyka",
     price: 200,
     description: "",
-    done: false,
   },
 ];
