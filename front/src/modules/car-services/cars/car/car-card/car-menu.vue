@@ -6,7 +6,9 @@ import { ref } from "vue";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../services/firebase.config";
 import { handlePrint } from "../../../../../services/print.";
+import { useRoute, useRouter } from "vue-router";
 const showDialog = ref(false);
+const router = useRouter()
 
 const props = defineProps({
   car: {
@@ -24,9 +26,14 @@ const removeCar = async () => {
   showDialog.value = false;
 };
 
+const navigateToCar = () => {
+  router.push('../car/' + props.car.id )
+}
+
 const items = [
   { title: "Drukuj raport", onClick: handlePrint },
   { title: "Edytuj", onClick: () => {} },
+  { title: "Zobacz szczegóły", onClick: navigateToCar },
   { title: "Usuń pojazd", onClick: handleRemoveCar },
 ];
 </script>

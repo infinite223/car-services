@@ -5,7 +5,7 @@ export const orders: OrderElementCreateDto[] = [
   {
     id: "1",
     name: "Silnik",
-    price: 5000,
+    price: 5005,
     description: "Silnik benzynowy 2.0L",
     received: false,
   },

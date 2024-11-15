@@ -5,6 +5,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { Car, CarService } from "../models";
 import carCard from "./car/car-card/car-card.vue";
 import AddCarDialog from "./add-car-dialog.vue";
+import { RouterView } from "vue-router";
 
 const cars = ref<Car[]>([]);
 
@@ -39,6 +40,7 @@ getCarsWithServices();
 <template>
   <div class="flex flex-col gap-4 w-full">
     <v-container>
+      <RouterView/> 
       <div class="flex justify-between w-full px-4 pt-2 mb-4">
         <h2 class="font-bold text-lg">Przyjęte pojazdy</h2>
 

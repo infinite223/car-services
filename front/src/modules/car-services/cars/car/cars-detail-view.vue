@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div>
+  <div class="flex p-2">
     <h1>Detail for Car ID: {{ props.id }}</h1>
   </div>
 </template>
