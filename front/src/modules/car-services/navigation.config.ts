@@ -25,4 +25,9 @@ export const navigationItems = [
     name: "Galeria",
     icon: "mdi-image-area",
   },
+  {
+    path: "/employees",
+    name: "Pracownicy",
+    icon: "mdi-account-group",
+  },
 ];

@@ -14,6 +14,7 @@ import { app } from "./services/firebase.config";
 import { VueHtmlToPaper } from "vue-html-to-paper";
 import { VDateInput } from "vuetify/lib/labs/components.mjs";
 import ToastPlugin from "vue-toast-notification";
+import { createPinia } from "pinia";
 
 const options = {
   name: "_blank",
@@ -35,9 +36,12 @@ const vuetify = createVuetify({
   directives,
 });
 
+const pinia = createPinia();
+
 createApp(App)
   .use(vuetify)
   .use(router)
+  .use(pinia)
   .use(ToastPlugin)
   .use(VueFire, {
     firebaseApp: app,

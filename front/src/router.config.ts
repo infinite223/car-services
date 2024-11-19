@@ -15,6 +15,7 @@ import NotFoundView from "./modules/car-services/not-found-view.vue";
 import CarsDetailView from "./modules/car-services/cars/car/cars-detail-view.vue";
 import CarView from "./modules/car-services/car/car-view.vue";
 import StorageView from "./modules/car-services/storage/storage-view.vue";
+import EmployeesView from "./modules/car-services/employees/employees-view.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -56,11 +57,15 @@ const routes: RouteRecordRaw[] = [
       {
         path: "/car/:id",
         component: CarView,
-        props: true
+        props: true,
       },
       {
         path: "/users",
         component: UsersView,
+      },
+      {
+        path: "/employees",
+        component: EmployeesView,
       },
       {
         path: "/storage",
