@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../services/firebase.config";
 import { useTheme } from "../../composables/useTheme";
 
@@ -14,6 +18,16 @@ const { color } = useTheme();
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
+    router.push("/car-services");
+  } catch (error) {
+    errorMessage.value = "Błąd podczas logowania: " + (error as Error).message;
+  }
+};
+
+const loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+    await signInWithPopup(auth, provider);
     router.push("/car-services");
   } catch (error) {
     errorMessage.value = "Błąd podczas logowania: " + (error as Error).message;
@@ -50,6 +64,16 @@ const login = async () => {
         class="text-white w-full"
         >Zaloguj się</v-btn
       >
+
+      <v-btn
+        height="30"
+        variant="elevated"
+        class="text-black w-full mt-4"
+        @click="loginWithGoogle"
+      >
+        <v-icon icon="mdi-google" class="mr-2" size="15" />
+        <span class="text-xs"> Zaloguj się przez Google </span>
+      </v-btn>
 
       <p class="text-center text-sm my-1" v-if="errorMessage">
         {{ errorMessage }}
