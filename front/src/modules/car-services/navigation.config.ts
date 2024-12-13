@@ -26,8 +26,18 @@ export const navigationItems = [
     icon: "mdi-image-area",
   },
   {
-    path: "/employees",
-    name: "Pracownicy",
+    path: "/clients",
+    name: "klienci",
+    icon: "mdi-account-group",
+  },
+  {
+    path: "/orders-2",
+    name: "Zamówienia",
+    icon: "mdi-order-bool-descending",
+  },
+  {
+    path: "/users",
+    name: "Użytkownicy",
     icon: "mdi-account-group",
   },
 ];
