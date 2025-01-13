@@ -14,7 +14,7 @@ const headers = [
 
 const services = ref<Service[]>([])
 
-onSnapshot(collectionGroup(db, "car-orders"), (doc) => {
+onSnapshot(collectionGroup(db, "services"), (doc) => {
     services.value = doc.docs.map((doc) => { return {...doc.data(), id: doc.id} as Service } );
 });
 </script>

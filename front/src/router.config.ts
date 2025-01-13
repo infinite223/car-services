@@ -12,12 +12,9 @@ import UsersView from "./modules/car-services/users/users-view.vue";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./services/firebase.config";
 import NotFoundView from "./modules/car-services/not-found-view.vue";
-import CarsDetailView from "./modules/car-services/cars/car/cars-detail-view.vue";
 import CarView from "./modules/car-services/car/car-view.vue";
 import StorageView from "./modules/car-services/storage/storage-view.vue";
 import EmployeesView from "./modules/car-services/employees/employees-view.vue";
-import ClientsView from "./modules/car-services/clients/clients-view.vue";
-import Orders2View from "./modules/car-services/orders-2/orders-2-view.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -72,14 +69,6 @@ const routes: RouteRecordRaw[] = [
       {
         path: "/storage",
         component: StorageView,
-      },
-      {
-        path: "/clients",
-        component: ClientsView,
-      },
-      {
-        path: "/orders-2",
-        component: Orders2View,
       },
     ],
   },

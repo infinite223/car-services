@@ -92,7 +92,7 @@ app.delete("/api/users", async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = 5005;
 app.listen(PORT, () => {
   console.log(`Serwer działa na http://localhost:${PORT}`);
 });

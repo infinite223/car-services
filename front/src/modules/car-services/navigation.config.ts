@@ -25,19 +25,4 @@ export const navigationItems = [
     name: "Galeria",
     icon: "mdi-image-area",
   },
-  {
-    path: "/clients",
-    name: "klienci",
-    icon: "mdi-account-group",
-  },
-  {
-    path: "/orders-2",
-    name: "Zamówienia",
-    icon: "mdi-order-bool-descending",
-  },
-  {
-    path: "/users",
-    name: "Użytkownicy",
-    icon: "mdi-account-group",
-  },
 ];

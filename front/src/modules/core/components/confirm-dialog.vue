@@ -47,7 +47,12 @@ function closeDialog() {
             height="30"
             variant="elevated"
             class="px-4"
-            @click="emit('confirm')"
+            @click="
+              () => {
+                emit('confirm');
+                closeDialog();
+              }
+            "
           >
             <span class="text-white text-xs">Potwierdź</span>
           </v-btn>
