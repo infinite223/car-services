@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { db } from "../../../services/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import { Car, CarService } from "../models";

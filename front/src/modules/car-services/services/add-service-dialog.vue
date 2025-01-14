@@ -42,7 +42,7 @@ const submit = async () => {
   const newService: ServiceCreateDto = {
     ...state,
   };
-  await addDoc(collection(db, "services"), newService);
+  await addDoc(collection(db, "orders"), newService);
 
   close();
 };
